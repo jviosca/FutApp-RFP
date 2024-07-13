@@ -1,15 +1,11 @@
-
 import streamlit as st
-from streamlit_gsheets import GSheetsConnection
+import aux_functions as aux
 
-# Create a connection object.
-conn = st.connection("gsheets", type=GSheetsConnection)
 
-df = conn.read(worksheet="registro_partidos",
-                ttl="10m",
-                nrows=5)
                 
-st.title("Real Futbal Patata App")                
-# show dataframe
-st.dataframe(df)
-
+st.title("Real Futbal Patata App")          
+st.header("Clasificación")          
+temporadas,partidos,jugadores,mvp = aux.leer_gsheets(aux.create_gsheets_connection())
+#temporada_elegida = st.selectbox("Escoge temporada",temporadas['nombre'])
+clasificacion_df = aux.clasificacion(partidos,jugadores,mvp)
+st.table(clasificacion_df)

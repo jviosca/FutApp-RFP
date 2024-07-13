@@ -1,3 +1,4 @@
 envs/
 streamlit-gsheets conn/
 .streamlit/
+__pycache__/
