@@ -160,7 +160,7 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
             clasificacion_df.loc[jugador,'Goles'] = str(int(goles_total)) + " (+" + str(int(goles_ultima_jornada)) + ")"
             clasificacion_df.loc[jugador,'goles'] = goles_total
             clasificacion_df.loc[jugador,'goles_0'] = goles_total - goles_ultima_jornada
-    st.write("Clasificación hasta la jornada " + str(int(max(dict_fechas_jornadas))) + " (" + pd.to_datetime(max(dict_fechas_jornadas.values()))[0].strftime("%d/%m/%Y") + ")")
+    st.write("Clasificación hasta la jornada " + str(int(max(dict_fechas_jornadas))) + " (" + pd.to_datetime(dict_fechas_jornadas[max(dict_fechas_jornadas)], dayfirst=True, format="%d/%m/%Y")[0].strftime("%d/%m/%Y") + ")")
     st.write("Jugar: +1; Ganar: +1; Max goleador: +1;\n<5 goles: +1 [portero: +1]; MVP (🌟): +1")
     clasificacion_df.reset_index(inplace=True)
     # calculamos posicion jornada anterior
