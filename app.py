@@ -10,6 +10,6 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 
 df = conn.read(worksheet="registro_partidos",
                 ttl="10m",
-                nrows="5")
+                nrows=5)
 # show dataframe
 st.dataframe(df)
