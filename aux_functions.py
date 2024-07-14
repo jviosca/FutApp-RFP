@@ -70,6 +70,7 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
         ganadores_lista = df_jornada.loc[df_jornada['resultado_partido'] == 'Ganado']['jugador'].tolist()
         dict_partidos_ganados_jornadas[jornada] = ganadores_lista
         jugadores_jornada_lista = df_jornada['jugador'].tolist()
+        #st.write(jugadores_jornada_lista)
         dict_partidos_jugados_jornadas[jornada] = jugadores_jornada_lista 
         mvp['jornada_n'] = mvp['Jornada'].apply(lambda x: int(x.split('Jornada ')[1].split('|')[0][:-1]))
         mvp.drop_duplicates(['Dirección de correo electrónico','jornada_n'], keep='last', inplace=True)
