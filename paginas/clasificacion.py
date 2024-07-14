@@ -3,7 +3,7 @@ import aux_functions as aux
 
 
                 
-st.title("Real Futbal Patata App")          
+st.title("New Real Patata FutApp")          
 st.header("Clasificación")          
 temporadas,partidos,jugadores,mvp = aux.leer_gsheets(aux.create_gsheets_connection())
 temporada_elegida_años = st.selectbox("Escoge temporada",temporadas['nombre'])
@@ -16,5 +16,6 @@ partidos_temporada_elegida = partidos.loc[partidos['temporada']==temporada_elegi
 if partidos_temporada_elegida.shape[0] > 0:
     clasificacion_df = aux.clasificacion(partidos_temporada_elegida,jugadores,mvp_temporada_elegida)
     st.table(clasificacion_df)
+    #st.data_editor(clasificacion_df, disabled=True, use_container_width=True, height=980)
 else:
     st.write("No hay partidos en la temporada elegida")

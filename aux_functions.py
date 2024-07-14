@@ -3,6 +3,7 @@ import datetime
 import random
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
+import sys
 
 def create_gsheets_connection():
     # Create a gsheets connection object.
