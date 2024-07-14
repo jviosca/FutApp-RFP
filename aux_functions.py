@@ -57,6 +57,7 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
     dict_partidos_ganados_jornadas = {}
     dict_partidos_jugados_jornadas = {}
     dict_mvp_jornadas = {}
+    
     for jornada in lista_jornadas:
         #print("Jornada " + str(jornada))
         df_jornada = partidos.loc[partidos['jornada']==jornada]
@@ -70,7 +71,7 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
         dict_partidos_ganados_jornadas[jornada] = ganadores_lista
         jugadores_jornada_lista = df_jornada['jugador'].tolist()
         dict_partidos_jugados_jornadas[jornada] = jugadores_jornada_lista 
-        mvp['jornada_n'] = mvp['Jornada'].apply(lambda x: int(x.split('Jornada ')[1][:-1]))
+        mvp['jornada_n'] = mvp['Jornada'].apply(lambda x: int(x.split('Jornada ')[1].split('|')[0][:-1]))
         mvp.drop_duplicates(['Dirección de correo electrónico','jornada_n'], keep='last', inplace=True)
         emails_jugadores_jornada = jugadores.loc[jugadores['nombre'].isin(partidos.loc[partidos['jornada']==jornada]['jugador'])]['email']
         df_elegidos_mvp = mvp.loc[(mvp['jornada_n']==jornada) & (mvp['Dirección de correo electrónico'].isin(emails_jugadores_jornada)) & (mvp['Mejor jugador del partido'].isin(jugadores_jornada_lista))]
