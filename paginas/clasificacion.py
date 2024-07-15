@@ -1,6 +1,6 @@
 import streamlit as st
+import datetime
 import aux_functions as aux
-
 
                 
 st.title("New Real Patata FutApp")          
@@ -14,6 +14,9 @@ mvp_temporada_elegida = mvp.loc[mvp['temporada_n']==temporada_elegida_n]
 partidos_temporada_elegida = partidos.loc[partidos['temporada']==temporada_elegida_n]
 #st.dataframe(partidos_temporada_elegida)
 if partidos_temporada_elegida.shape[0] > 0:
+    # Miércoles y Jueves son weekdays 2 y 3
+    if datetime.datetime.today().weekday() in [2,3]:
+        st.markdown("**Esta clasificación es temporal y está pendiente de la votación del MVP. La fecha límite para la votación es el jueves a las 23:59. A partir del viernes, la clasificación será definitiva**")
     clasificacion_df = aux.clasificacion(partidos_temporada_elegida,jugadores,mvp_temporada_elegida)
     st.table(clasificacion_df)
     #st.data_editor(clasificacion_df, disabled=True, use_container_width=True, height=980)
