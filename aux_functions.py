@@ -58,6 +58,7 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
     dict_partidos_ganados_jornadas = {}
     dict_partidos_jugados_jornadas = {}
     dict_mvp_jornadas = {}
+    dict__msg_mvp_jornadas = {}
     
     for jornada in lista_jornadas:
         #print("Jornada " + str(jornada))
@@ -78,10 +79,15 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
         emails_jugadores_jornada = jugadores.loc[jugadores['nombre'].isin(partidos.loc[partidos['jornada']==jornada]['jugador'])]['email']
         df_elegidos_mvp = mvp.loc[(mvp['jornada_n']==jornada) & (mvp['Dirección de correo electrónico'].isin(emails_jugadores_jornada)) & (mvp['Mejor jugador del partido'].isin(jugadores_jornada_lista))]
         dict_mvp_jornadas[jornada] = None
+        dict__msg_mvp_jornadas[jornada] = None
         if df_elegidos_mvp.shape[0] >= 7:
             elegidos_mvp = df_elegidos_mvp['Mejor jugador del partido'].mode().values
             if len(elegidos_mvp) == 1:
                 dict_mvp_jornadas[jornada] = elegidos_mvp[0]
+            else:
+                dict__msg_mvp_jornadas[jornada] = "En la votación del MPV hay un empate entre " + ' y '.join(jugador for jugador in elegidos_mvp) + ". No se reparte este punto."
+        else:
+            dict__msg_mvp_jornadas[jornada] = "No ha habido al menos 7 votos para el MVP. No se reparte este punto."
     print(dict_mvp_jornadas[jornada])
     # ahora guardamos puntos en un dataframe
     clasificacion_df = pd.DataFrame(columns=['Jugador','puntos_0', 'Puntos','Goles','Jugados','Ganados'])
@@ -165,6 +171,8 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
             clasificacion_df.loc[jugador,'goles_0'] = goles_total - goles_ultima_jornada
     st.write("Clasificación hasta la jornada " + str(int(max(dict_fechas_jornadas))) + " (" + pd.to_datetime(dict_fechas_jornadas[max(dict_fechas_jornadas)], dayfirst=True, format="%d/%m/%Y")[0].strftime("%d/%m/%Y") + ")")
     st.write("Jugar: +1; Ganar: +1; Max goleador: +1;\n<5 goles: +1 [portero: +1]; MVP (🌟): +1")
+    if dict__msg_mvp_jornadas[max(dict__msg_mvp_jornadas)] != None:
+        st.write(dict__msg_mvp_jornadas[max(dict__msg_mvp_jornadas)])
     clasificacion_df.reset_index(inplace=True)
     # calculamos posicion jornada anterior
     clasificacion_df.sort_values(['puntos_0','jugados_0','ganados_0','Goles'], ascending=False, inplace=True)
