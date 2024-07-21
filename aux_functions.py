@@ -85,9 +85,9 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
             if len(elegidos_mvp) == 1:
                 dict_mvp_jornadas[jornada] = elegidos_mvp[0]
             else:
-                dict__msg_mvp_jornadas[jornada] = "En la votación del MPV hay un empate entre " + ' y '.join(jugador for jugador in elegidos_mvp) + ". No se reparte este punto."
+                dict__msg_mvp_jornadas[jornada] = "*En la votación del MPV de la jornada " + str(int(jornada)) + " ha habido un empate entre " + ' y '.join(jugador for jugador in elegidos_mvp) + ", por lo que no se ha repartido este punto.*"
         else:
-            dict__msg_mvp_jornadas[jornada] = "No ha habido al menos 7 votos para el MVP. No se reparte este punto."
+            dict__msg_mvp_jornadas[jornada] = "*En la votación del MPV de la jornada " + str(int(jornada)) + " no ha habido al menos 7 votos, por lo que no se ha repartido este punto.*"
     print(dict_mvp_jornadas[jornada])
     # ahora guardamos puntos en un dataframe
     clasificacion_df = pd.DataFrame(columns=['Jugador','puntos_0', 'Puntos','Goles','Jugados','Ganados'])
