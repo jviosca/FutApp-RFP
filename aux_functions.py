@@ -49,6 +49,9 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
         lista_jornadas = sorted(lista_jornadas)
     else:
         lista_jornadas = range(1,jornada + 1)
+    # quitamos ultima jornada si no tiene jugadores
+    if partidos.loc[partidos['jornada']==lista_jornadas[-1]]['jugador'].dropna().shape[0] == 0:
+        lista_jornadas.remove(lista_jornadas[-1])
     # guardamos una lista con porteros
     lista_porteros = jugadores.loc[jugadores['posicion']=='portero']['nombre'].values
     # guardamos los valores de interes en listas dentro de diccionarios
@@ -93,7 +96,9 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
                 dict__msg_mvp_jornadas[jornada] = "*En la votación del MPV de la jornada " + str(int(jornada)) + " no ha habido al menos 7 votos, por lo que no se ha repartido este punto.*"
         else:
             dict__msg_mvp_jornadas[jornada] = "*La votación del MVP está en curso. Se han recibido " + str(df_elegidos_mvp.shape[0]) + " votaciones*"
-    print(dict_mvp_jornadas[jornada])
+    #print(dict_mvp_jornadas[jornada])
+    #st.write(dict_mvp_jornadas)
+
     # ahora guardamos puntos en un dataframe
     clasificacion_df = pd.DataFrame(columns=['Jugador','puntos_0', 'Puntos','Goles','Jugados','Ganados'])
     clasificacion_df.set_index('Jugador',inplace=True)
