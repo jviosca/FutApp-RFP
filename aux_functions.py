@@ -142,6 +142,11 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
                 if jugador in dict_partidos_jugados_jornadas[jornada-1]:
                     puntos_0 = puntos_0 + 1 
                     jugados_0 = jugados_0 + 1
+                if dict_mvp_jornadas[jornada-1] != None:
+                    if jugador == dict_mvp_jornadas[jornada-1]:
+                        puntos_0 = puntos_0 + 1 
+                        #print(jornada)
+                        #print(dict_mvp_jornadas[jornada-1])
                     
             goles_ultima_jornada = partidos.loc[(partidos['jugador']==jugador) & (partidos['jornada']==jornada)]['goles_metidos'].values
             if len(goles_ultima_jornada)>0:
@@ -204,6 +209,7 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
     clasificacion_df.set_index('Posición', inplace=True)
     clasificacion_df.drop(columns=['puntos_0','puntos','posicion', 'posicion_jornada_anterior', 'jugados_0','ganados_0','goles','goles_0'], inplace=True)
     # añadimos estrella al MVP
+    print(dict_mvp_jornadas[max(dict_fechas_jornadas)])
     if dict_mvp_jornadas[max(dict_fechas_jornadas)] != None:
         clasificacion_df['Jugador'] = clasificacion_df['Jugador'].apply(lambda x: '🌟 ' + x if x == dict_mvp_jornadas[max(dict_fechas_jornadas)] else x)
     return clasificacion_df
