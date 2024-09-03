@@ -19,8 +19,11 @@ if partidos_temporada_elegida.shape[0] > 0:
     #st.write(fecha_ultimo_partido)
     if datetime.datetime.today() < fecha_cierre_mvp and datetime.datetime.today() > fecha_ultimo_partido:
         st.markdown("**Esta clasificación es temporal y está pendiente de la votación del MVP. La fecha límite para la votación es el jueves a las 23:59. A partir del viernes, la clasificación será definitiva**")
-    clasificacion_df = aux.clasificacion(partidos_temporada_elegida,jugadores,mvp_temporada_elegida)
-    st.table(clasificacion_df)
-    #st.data_editor(clasificacion_df, disabled=True, use_container_width=True, height=980)
+    try:
+        clasificacion_df = aux.clasificacion(partidos_temporada_elegida,jugadores,mvp_temporada_elegida)
+        st.table(clasificacion_df)
+        #st.data_editor(clasificacion_df, disabled=True, use_container_width=True, height=980)
+    except:
+        st.write("Todavía no se han introducido los goles de ningún partido")
 else:
     st.write("No hay partidos en la temporada elegida")
