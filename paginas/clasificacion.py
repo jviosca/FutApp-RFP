@@ -6,7 +6,7 @@ import aux_functions as aux
 st.title("New Real Patata FutApp")          
 st.header("Clasificación")          
 temporadas,partidos,jugadores,mvp = aux.leer_gsheets(aux.create_gsheets_connection())
-temporada_elegida_años = st.selectbox("Escoge temporada",temporadas['nombre'])
+temporada_elegida_años = st.selectbox("Escoge temporada",temporadas['nombre'], index=len(temporadas['nombre'])-1)
 temporada_elegida_n = temporadas.loc[temporadas['nombre']==temporada_elegida_años]['numero'].values[0]
 # filtramos la temporada
 mvp['temporada_n'] = mvp['Jornada'].apply(lambda x: int(x.split('Temporada ')[1][:-1]))
