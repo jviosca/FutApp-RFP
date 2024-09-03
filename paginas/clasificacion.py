@@ -25,5 +25,6 @@ if partidos_temporada_elegida.shape[0] > 0:
         #st.data_editor(clasificacion_df, disabled=True, use_container_width=True, height=980)
     except:
         st.write("Todavía no se han introducido los goles de ningún partido")
+        pass
 else:
     st.write("No hay partidos en la temporada elegida")
