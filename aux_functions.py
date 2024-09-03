@@ -199,12 +199,15 @@ def clasificacion(partidos,jugadores, mvp, jornada='todas', umbral_goles_recibid
     pos_jornada_ultima = clasificacion_df['posicion'].tolist()
     pos_ultima_con_cambio = []
     for ultima,anterior in zip(pos_jornada_ultima,pos_jornada_anterior):
-        if ultima == anterior:
-            pos_ultima_con_cambio.append(str(ultima) + ' =')
-        elif ultima < anterior:
-            pos_ultima_con_cambio.append(str(ultima) + ' ↑')
-        else:
-            pos_ultima_con_cambio.append(str(ultima) + ' ↓')
+        if len(lista_jornadas) > 1: # solo ponemos marca de cambio si es jornada >=2
+            if ultima == anterior:
+                pos_ultima_con_cambio.append(str(ultima) + ' =')
+            elif ultima < anterior:
+                pos_ultima_con_cambio.append(str(ultima) + ' ↑')
+            else:
+                pos_ultima_con_cambio.append(str(ultima) + ' ↓')
+        else: # si es jornada 1, no ponemos marca de cambio
+            pos_ultima_con_cambio.append(str(ultima))
     clasificacion_df['Posición'] = pos_ultima_con_cambio
     clasificacion_df.set_index('Posición', inplace=True)
     clasificacion_df.drop(columns=['puntos_0','puntos','posicion', 'posicion_jornada_anterior', 'jugados_0','ganados_0','goles','goles_0'], inplace=True)
